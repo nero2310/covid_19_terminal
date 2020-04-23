@@ -1,6 +1,6 @@
 import requests
 
-from settings import KEY
+from settings import API_KEY
 url = "https://covid-19-data.p.rapidapi.com/country"
 country="Poland"
 querystring = {"format":"json","name":country}
