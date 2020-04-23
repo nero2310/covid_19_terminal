@@ -1,15 +1,20 @@
-import requests
+import classes
 
-from settings import API_KEY
-url = "https://covid-19-data.p.rapidapi.com/country"
-country="Poland"
-querystring = {"format":"json","name":country}
+from settings import  API_KEY
 
-headers = {
-    'x-rapidapi-host': "covid-19-data.p.rapidapi.com",
-    'x-rapidapi-key':KEY
-    }
+def menu():
+	print("1.Total Cases in World")
+	print("2.Total Cases in today in World")
+	print("8.Print country list")
+	print("9.Exit")
+	option=input("Chose option")
+	if option=="1":
+		var=classes.TotalCases()
+		var.print_data()
+	if option=="2":
+		var=classes.TotalCasesDaily()
+		var.print_data()
+	if option=="8":
+		print(classes.get_list_of_countries())
 
-response = requests.request("GET", url, headers=headers,params=querystring)
-
-print(response.text)
+menu()
