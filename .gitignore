@@ -148,3 +148,4 @@ cython_debug/
 .idea/sonarlint/
 
 settings.py
+!/countires.json

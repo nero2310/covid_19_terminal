@@ -51,3 +51,4 @@ class TotalCasesDaily(HeadersApi):
 		self.query={"date-format":"YYYY-MM-DD","format":"json","date":self.date_today}
 		self.url="https://covid-19-data.p.rapidapi.com/report/totals"
 
+
