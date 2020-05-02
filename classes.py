@@ -34,12 +34,13 @@ class HeadersApi:
 
 	def make_a_call(self):
 		self.response = requests.request("GET", self.url, headers=self.headers, params=self.query)
+		self.json_obj = json.loads(self.response.text)
 
 	def print_data(self):
 		self.make_a_call()
-		elements = self.response.text.split(",")
-		for element in elements:
-			print(element)
+		json_obj=json.loads(self.response.text)
+		print(json_obj)
+
 
 
 class TotalCases(HeadersApi):
@@ -60,5 +61,6 @@ class TotalCasesDaily(HeadersApi):
 
 class DataPrinter():
 	def __init__(self,data):
-		for element in data:
-			print(element)
+		self.data=data
+	def print_date(self):
+		print(self.data)

@@ -9,11 +9,11 @@ def menu():
 	print("9.Exit")
 	option=input("Chose option")
 	if option=="1":
-		var=classes.TotalCases()
-		var.print_data()
+		data=classes.TotalCases()
+		data.print_data()
 	if option=="2":
-		var=classes.TotalCasesDaily()
-		var.print_data()
+		data=classes.TotalCasesDaily()
+		data.print_data()
 	if option=="8":
 		print(classes.get_list_of_countries())
 
