@@ -10,10 +10,10 @@ def menu():
 	option=input("Chose option")
 	if option=="1":
 		data=classes.TotalCases()
-		data.print_data()
+		data.make_a_call()
 	if option=="2":
 		data=classes.TotalCasesDaily()
-		data.print_data()
+		data.make_a_call()
 	if option=="8":
 		print(classes.get_list_of_countries())
 
