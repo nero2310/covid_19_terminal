@@ -7,7 +7,7 @@ def menu():
 	print("2.Total Cases in today in World")
 	print("8.Create country file")
 	print("9.Exit")
-	option=input("Chose option")
+	option=input("Chose option : ")
 	if option=="1":
 		data=classes.TotalCases()
 		data.make_a_call()

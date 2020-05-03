@@ -21,15 +21,13 @@ def get_list_of_countries():  # toDo rewrite save to file
 
 
 class DateAnalyzer:
-	def __init__(self):
-		self.json_obj=""
+	def __init__(self, data):
+		self.json_obj = data
+		self.cases_dict = self.json_obj[0]
 
-	def json_to_list(self):
-		self.json_obj=json.loads(date)
-		
 	def print_json(self):
-		self.json_to_list(date)
-		print(self.json_obj)
+		for key, value in self.json_obj[0].items():
+			print(key, value)
 
 
 class BaseApiClass:
@@ -46,10 +44,12 @@ class BaseApiClass:
 
 	def make_a_call(self):
 		self.response = requests.request("GET", self.url, headers=self.headers, params=self.query)
-		self.json_obj = json.loads(self.response.text)
-		print(self.json_obj)
+		json_obj = json.loads(self.response.text)
+		data_analyzer = DateAnalyzer(json_obj)
+		data_analyzer.print_json()
 
-class TotalCases(BaseApiClass,DateAnalyzer):
+
+class TotalCases(BaseApiClass, DateAnalyzer):
 	def __init__(self):
 		super().__init__()
 		self.query = {"format": "json"}
@@ -59,10 +59,8 @@ class TotalCases(BaseApiClass,DateAnalyzer):
 		print(self.headers)
 
 
-class TotalCasesDaily(BaseApiClass,DateAnalyzer):
+class TotalCasesDaily(BaseApiClass, DateAnalyzer):
 	def __init__(self):
 		super().__init__()
 		self.query = {"date-format": "YYYY-MM-DD", "format": "json", "date": self.date_today}
 		self.url = "https://covid-19-data.p.rapidapi.com/report/totals"
-
-
