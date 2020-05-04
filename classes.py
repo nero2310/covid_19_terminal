@@ -28,7 +28,7 @@ class DateAnalyzer:
 	def print_json(self):
 		for key, value in self.json_obj[0].items():
 			print(key, value)
-
+		return 1
 
 class BaseApiClass:
 	def __init__(self):
