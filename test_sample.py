@@ -8,6 +8,7 @@ json_obj=[
 		"deaths":200
 	}
 ]
+
 cases_dict=[
 	{
 	"confirmed":0,
@@ -21,12 +22,14 @@ cases_dict_2=[
 		"recovered":2
 	}
 ]
+
 cases_dict_3=[
 	{
 		"confirmed":1,
 		"recovered":2
 	}
 ]
+
 def test_DateAnalyzer():
 	assert classes.DateAnalyzer(json_obj).print_json()==1
 	assert classes.DateAnalyzer(cases_dict).cases_validity()==False
