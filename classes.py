@@ -61,8 +61,7 @@ class BaseApiClass:
 			data.print_json()
 
 	def set_date(self):
-            variable = input("Enter date example 2020-5-15 : ") # I know it's ugly way to pass a value but i don't have idea
-																									# how to pass date
+		variable = input("Enter date example 2020-5-15 : ") # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
 		self.date = datetime.strptime(variable, "%Y-%m-%d").date()
 
 
