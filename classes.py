@@ -31,7 +31,7 @@ class DateAnalyzer:
 		return 1
 
 	def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
-		if self.cases_dict.get("confirmed", 0) == False | self.cases_dict.get("recovered", 0) == False:
+		if self.cases_dict.get("confirmed", 0) is False | self.cases_dict.get("recovered", 0) is False:
 			print("Warning don't have data from this date check another day")
 			print("Check day before")
 			return False
