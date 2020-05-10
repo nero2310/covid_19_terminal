@@ -5,7 +5,8 @@ from settings import API_KEY
 
 def menu():
 	print("1.Total Cases in World")
-	print("2.Total Cases in World enter date")
+	print("2.Total Cases in World (user specify date)")
+	print("3 Total Cases in Country")
 	print("8.Create country file")
 	print("9.Exit")
 	option = input("Chose option : ")
