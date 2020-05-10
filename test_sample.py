@@ -31,7 +31,7 @@ cases_dict_3 = [
 ]
 
 
-def test_DateAnalyzer():
+def test_date_analyzer():
 	assert classes.DateAnalyzer(json_obj).print_json() == 1
 	assert classes.DateAnalyzer(cases_dict).cases_validity() == False
 	assert classes.DateAnalyzer(cases_dict_2).cases_validity() == True
