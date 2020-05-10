@@ -20,7 +20,9 @@ def menu():
 		data_analyzer=classes.DateAnalyzer(python_object).print_json()
 	if option == "3":
 		data = classes.CasesDailyCountry()
-		data.make_a_call()
+		python_object=data.make_a_call()
+		data_analyzer=classes.DateAnalyzer(python_object).print_json()
+
 	if option == "8":
 		print(classes.get_list_of_countries())
 
