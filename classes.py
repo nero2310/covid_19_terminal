@@ -51,14 +51,12 @@ class BaseApiClass:
 		}
 		self.query = {}
 		self.url = ""
-		self.date = date.today()
+		self.date = date.today() # Set self.date to today date
 
 	def make_a_call(self):
 		self.response = requests.request("GET", self.url, headers=self.headers, params=self.query)
 		json_obj = json.loads(self.response.text)
-		data = DateAnalyzer(json_obj)
-		if data.cases_validity():
-			data.print_json()
+		return json_obj
 
 	def set_date(self):
 		variable = input("Enter date example 2020-5-15 : ") # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
