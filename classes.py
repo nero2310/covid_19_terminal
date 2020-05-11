@@ -52,7 +52,7 @@ class BaseApiClass:
 		self.query = {}
 		self.url = ""
 		self.date = date.today() # Set self.date to today date
-
+		self.country="Poland" # It's only default value you should change it by call set_country method
 	def make_a_call(self):
 		self.response = requests.request("GET", self.url, headers=self.headers, params=self.query)
 		json_obj = json.loads(self.response.text)
@@ -62,12 +62,15 @@ class BaseApiClass:
 		variable = input("Enter date example 2020-5-15 : ") # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
 		self.date = datetime.strptime(variable, "%Y-%m-%d").date()
 
+	def set_country(self):
+		country=input("Enter country example Poland : ")
+		self.country=country
+		self.query = {"format": "json"}
+		self.url = "https://covid-19-data.p.rapidapi.com/totals"
 
 class TotalCases(BaseApiClass, DateAnalyzer):
 	def __init__(self):
 		super().__init__()
-		self.query = {"format": "json"}
-		self.url = "https://covid-19-data.p.rapidapi.com/totals"
 
 	def print_headers(self):
 		print(self.headers)
@@ -86,6 +89,6 @@ class CasesDailyCountry(BaseApiClass,DateAnalyzer): # toDo i must overwrite func
 	def __init__(self):
 		super().__init__()
 		self.set_date()
-		self.country="Poland"
+		self.set_country()
 		self.query={"date-format":"YYYY-MM-DD","format":"json","date":self.date,"name":self.country}
 		self.url="https://covid-19-data.p.rapidapi.com/report/country/name"
