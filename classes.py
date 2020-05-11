@@ -31,7 +31,7 @@ class DateAnalyzer:
 		return 1
 
 	def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
-		if self.cases_dict.get("confirmed", 0) == False | self.cases_dict.get("recovered", 0) == False:
+		if self.cases_dict.get("confirmed", 0) is False | self.cases_dict.get("recovered", 0) is False:
 			print("Warning don't have data from this date check another day")
 			print("Check day before")
 			return False
@@ -51,14 +51,12 @@ class BaseApiClass:
 		}
 		self.query = {}
 		self.url = ""
-		self.date = date.today()
+		self.date = date.today() # Set self.date to today date
 
 	def make_a_call(self):
 		self.response = requests.request("GET", self.url, headers=self.headers, params=self.query)
 		json_obj = json.loads(self.response.text)
-		data = DateAnalyzer(json_obj)
-		if data.cases_validity():
-			data.print_json()
+		return json_obj
 
 	def set_date(self):
 		variable = input("Enter date example 2020-5-15 : ") # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
@@ -82,4 +80,13 @@ class CasesDailyWorld(BaseApiClass, DateAnalyzer):
 		self.query = {"date-format": "YYYY-MM-DD", "format": "json", "date": self.date}
 		self.url = "https://covid-19-data.p.rapidapi.com/report/totals"
 		print(self.date)
-# class
+
+
+class CasesDailyCountry(BaseApiClass,DateAnalyzer): # toDo i must overwrite function cases_validity for this class,
+													# this class storage date in diffrent way
+	def __init__(self):
+		super().__init__()
+		self.country="Poland"
+		self.query={"date-format":"YYYY-MM-DD","format":"json","date":self.yesterday,"name":self.country}
+		self.url="https://covid-19-data.p.rapidapi.com/report/country/name"
+		print(self.date)
