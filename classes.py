@@ -79,14 +79,13 @@ class CasesDailyWorld(BaseApiClass, DateAnalyzer):
 		self.set_date()
 		self.query = {"date-format": "YYYY-MM-DD", "format": "json", "date": self.date}
 		self.url = "https://covid-19-data.p.rapidapi.com/report/totals"
-		print(self.date)
 
 
 class CasesDailyCountry(BaseApiClass,DateAnalyzer): # toDo i must overwrite function cases_validity for this class,
 													# this class storage date in diffrent way
 	def __init__(self):
 		super().__init__()
+		self.set_date()
 		self.country="Poland"
-		self.query={"date-format":"YYYY-MM-DD","format":"json","date":self.yesterday,"name":self.country}
+		self.query={"date-format":"YYYY-MM-DD","format":"json","date":self.date,"name":self.country}
 		self.url="https://covid-19-data.p.rapidapi.com/report/country/name"
-		print(self.date)
