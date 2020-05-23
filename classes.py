@@ -40,8 +40,11 @@ class DateAnalyzer:
 
 
 class BaseApiClass:
+	"""
+	Parent class only for inheritance
+	This class set default data for attributes like date_today, yesterday , headers , country
+	"""
 	def __init__(self):
-		print("Init")
 		self.date_today = date.today()
 		self.yesterday = date.today() - timedelta(days=1)
 		self.date_today, self.yesterday = self.date_today.strftime("%Y-%m-%d"), self.yesterday.strftime("%Y-%m-%d")
@@ -53,30 +56,49 @@ class BaseApiClass:
 		self.url = ""
 		self.date = date.today() # Set self.date to today date
 		self.country="Poland" # It's only default value you should change it by call set_country method
+
 	def make_a_call(self):
+		'''
+		Make a request to api provider
+		:return:
+		json_obj
+		'''
 		self.response = requests.request("GET", self.url, headers=self.headers, params=self.query)
 		json_obj = json.loads(self.response.text)
 		return json_obj
 
 	def set_date(self):
+		"""
+		User set date whose will be used to make a request
+		"""
 		variable = input("Enter date example 2020-5-15 : ") # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
 		self.date = datetime.strptime(variable, "%Y-%m-%d").date()
 
 	def set_country(self):
+		"""
+		User set country whose will be used to make a request
+		"""
 		country=input("Enter country example Poland : ")
 		self.country=country
 		self.query = {"format": "json"}
 		self.url = "https://covid-19-data.p.rapidapi.com/totals"
 
 class TotalCases(BaseApiClass, DateAnalyzer):
+	"""
+	Class whose is used to make a call about daily cases in world
+	"""
 	def __init__(self):
 		super().__init__()
+		self.url="https://covid-19-data.p.rapidapi.com/totals"
 
 	def print_headers(self):
 		print(self.headers)
 
 
 class CasesDailyWorld(BaseApiClass, DateAnalyzer):
+	"""
+	Class whose is used to make a call about COVID-19 cases in world, user specify date
+	"""
 	def __init__(self):
 		super().__init__()
 		self.set_date()
@@ -86,6 +108,9 @@ class CasesDailyWorld(BaseApiClass, DateAnalyzer):
 
 class CasesDailyCountry(BaseApiClass,DateAnalyzer): # toDo i must overwrite function cases_validity for this class,
 													# this class storage date in diffrent way
+	"""
+	Class whose is used to make a call about COVID-19 cases in country, user specify country and date
+	"""
 	def __init__(self):
 		super().__init__()
 		self.set_date()
