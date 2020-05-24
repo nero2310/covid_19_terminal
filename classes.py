@@ -5,6 +5,8 @@ from datetime import date, timedelta, datetime
 
 from settings import API_KEY
 
+if __name__=="__main__":
+	print("Don't run this file directly, run main.py instead")
 
 def get_list_of_countries():  # toDo find a way to properly format output text
 	url = "https://covid-19-data.p.rapidapi.com/help/countries"
@@ -63,11 +65,11 @@ class BaseApiClass:
 		'''
 		Make a request to api provider
 		:return:
-		json_obj
+		date
 		'''
 		self.response = requests.request("GET", self.url, headers=self.headers, params=self.query)
-		json_obj = json.loads(self.response.text)
-		return json_obj
+		date = json.loads(self.response.text)
+		return date
 
 	def set_date(self):
 		"""
@@ -128,4 +130,4 @@ class CasesDailyCountry(BaseApiClass, DateAnalyzer):  # toDo i must overwrite fu
 
 class PandasDataAnalyzer:
 	def __init__(self,json_obj):
-		data_frame=pd.read_json(json_obj)
+		data_frame=pd.read_json(json_obj[0],orient="index")

@@ -7,6 +7,7 @@ def menu():
 	print("1.Total Cases in World")
 	print("2.Total Cases in World (user specify date)")
 	print("3 Total Cases in Country (user specify date)")
+	print("4.TESTING send data about total cases to pandas dataframe")
 	print("8.Create country file")
 	print("9.Exit")
 	option = input("Chose option : ")
@@ -22,6 +23,12 @@ def menu():
 		data = classes.CasesDailyCountry()
 		python_object = data.make_a_call()
 		data_analyzer = classes.DateAnalyzer(python_object).print_json()
+	if option == "4":
+		data = classes.TotalCases()
+		python_object=data.make_a_call()
+		print(python_object)
+		dataFrame=classes.PandasDataAnalyzer(python_object)
+		print(dataFrame)
 
 	if option == "8":
 		print(classes.get_list_of_countries())
