@@ -26,9 +26,7 @@ def menu():
 	if option == "4":
 		data = classes.TotalCases()
 		python_object=data.make_a_call()
-		print(python_object)
 		dataFrame=classes.PandasDataAnalyzer(python_object)
-		print(dataFrame)
 
 	if option == "8":
 		print(classes.get_list_of_countries())

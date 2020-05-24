@@ -129,5 +129,7 @@ class CasesDailyCountry(BaseApiClass, DateAnalyzer):  # toDo i must overwrite fu
 
 
 class PandasDataAnalyzer:
-	def __init__(self,json_obj):
-		data_frame=pd.read_json(json_obj[0],orient="index")
+	def __init__(self,data):
+		data_frame=pd.DataFrame(data)
+		print(data_frame)
+	
