@@ -1,5 +1,6 @@
 import requests
 import json
+import pandas as pd
 from datetime import date, timedelta, datetime
 
 from settings import API_KEY
@@ -44,6 +45,7 @@ class BaseApiClass:
 	Parent class only for inheritance
 	This class set default data for attributes like date_today, yesterday , headers , country
 	"""
+
 	def __init__(self):
 		self.date_today = date.today()
 		self.yesterday = date.today() - timedelta(days=1)
@@ -54,8 +56,8 @@ class BaseApiClass:
 		}
 		self.query = {}
 		self.url = ""
-		self.date = date.today() # Set self.date to today date
-		self.country="Poland" # It's only default value you should change it by call set_country method
+		self.date = date.today()  # Set self.date to today date
+		self.country = "Poland"  # It's only default value you should change it by call set_country method
 
 	def make_a_call(self):
 		'''
@@ -71,25 +73,28 @@ class BaseApiClass:
 		"""
 		User set date whose will be used to make a request
 		"""
-		variable = input("Enter date example 2020-5-15 : ") # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
+		variable = input(
+			"Enter date example 2020-5-15 : ")  # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
 		self.date = datetime.strptime(variable, "%Y-%m-%d").date()
 
 	def set_country(self):
 		"""
 		User set country whose will be used to make a request
 		"""
-		country=input("Enter country example Poland : ")
-		self.country=country
+		country = input("Enter country example Poland : ")
+		self.country = country
 		self.query = {"format": "json"}
 		self.url = "https://covid-19-data.p.rapidapi.com/totals"
+
 
 class TotalCases(BaseApiClass, DateAnalyzer):
 	"""
 	Class whose is used to make a call about daily cases in world
 	"""
+
 	def __init__(self):
 		super().__init__()
-		self.url="https://covid-19-data.p.rapidapi.com/totals"
+		self.url = "https://covid-19-data.p.rapidapi.com/totals"
 
 	def print_headers(self):
 		print(self.headers)
@@ -99,6 +104,7 @@ class CasesDailyWorld(BaseApiClass, DateAnalyzer):
 	"""
 	Class whose is used to make a call about COVID-19 cases in world, user specify date
 	"""
+
 	def __init__(self):
 		super().__init__()
 		self.set_date()
@@ -106,14 +112,20 @@ class CasesDailyWorld(BaseApiClass, DateAnalyzer):
 		self.url = "https://covid-19-data.p.rapidapi.com/report/totals"
 
 
-class CasesDailyCountry(BaseApiClass,DateAnalyzer): # toDo i must overwrite function cases_validity for this class,
-													# this class storage date in diffrent way
+class CasesDailyCountry(BaseApiClass, DateAnalyzer):  # toDo i must overwrite function cases_validity for this class,
+	# this class storage date in diffrent way
 	"""
 	Class whose is used to make a call about COVID-19 cases in country, user specify country and date
 	"""
+
 	def __init__(self):
 		super().__init__()
 		self.set_date()
 		self.set_country()
-		self.query={"date-format":"YYYY-MM-DD","format":"json","date":self.date,"name":self.country}
-		self.url="https://covid-19-data.p.rapidapi.com/report/country/name"
+		self.query = {"date-format": "YYYY-MM-DD", "format": "json", "date": self.date, "name": self.country}
+		self.url = "https://covid-19-data.p.rapidapi.com/report/country/name"
+
+
+class PandasDataAnalyzer:
+	def __init__(self,json_obj):
+		data_frame=pd.read_json(json_obj)
