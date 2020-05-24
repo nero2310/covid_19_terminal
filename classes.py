@@ -1,6 +1,8 @@
 import requests
 import json
 import pandas as pd
+import os.path
+
 from datetime import date, timedelta, datetime
 
 from settings import API_KEY
@@ -130,6 +132,14 @@ class CasesDailyCountry(BaseApiClass, DateAnalyzer):  # toDo i must overwrite fu
 
 class PandasDataAnalyzer:
 	def __init__(self,data):
-		data_frame=pd.DataFrame(data)
-		print(data_frame)
-	
+		self.data_frame=pd.DataFrame(data)
+		print(self.data_frame)
+
+	def save_to_json(self,file_name="database.json"):
+		pass
+
+	def load_from_json(self):
+		pass
+
+	def print_data_frame(self):
+		pass
