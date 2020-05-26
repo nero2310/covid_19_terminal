@@ -38,9 +38,9 @@ class DateAnalyzer:
 
     def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
         if (
-            self.cases_dict.get("confirmed", 0)
-            is False | self.cases_dict.get("recovered", 0)
-            is False
+                self.cases_dict.get("confirmed", 0)
+                is False | self.cases_dict.get("recovered", 0)
+                is False
         ):
             print("Warning don't have data from this date check another day")
             print("Check day before")
@@ -51,9 +51,9 @@ class DateAnalyzer:
 
 class BaseApiClass:
     """
-	Parent class only for inheritance
-	This class set default data for attributes like date_today, yesterday , headers , country
-	"""
+    Parent class only for inheritance
+    This class set default data for attributes like date_today, yesterday , headers , country
+    """
 
     def __init__(self):
         self.date_today = date.today()
@@ -73,10 +73,10 @@ class BaseApiClass:
 
     def make_a_call(self):
         """
-		Make a request to api provider
-		:return:
-		date
-		"""
+        Make a request to api provider
+        :return:
+        date
+        """
         self.response = requests.request(
             "GET", self.url, headers=self.headers, params=self.query
         )
@@ -85,8 +85,8 @@ class BaseApiClass:
 
     def set_date(self):
         """
-		User set date whose will be used to make a request
-		"""
+        User set date whose will be used to make a request
+        """
         variable = input(
             "Enter date example 2020-5-15 : "
         )  # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
@@ -94,8 +94,8 @@ class BaseApiClass:
 
     def set_country(self):
         """
-		User set country whose will be used to make a request
-		"""
+        User set country whose will be used to make a request
+        """
         country = input("Enter country example Poland : ")
         self.country = country
         self.query = {"format": "json"}
@@ -104,8 +104,8 @@ class BaseApiClass:
 
 class TotalCases(BaseApiClass, DateAnalyzer):
     """
-	Class whose is used to make a call about daily cases in world
-	"""
+    Class whose is used to make a call about daily cases in world
+    """
 
     def __init__(self):
         super().__init__()
@@ -117,8 +117,8 @@ class TotalCases(BaseApiClass, DateAnalyzer):
 
 class CasesDailyWorld(BaseApiClass, DateAnalyzer):
     """
-	Class whose is used to make a call about COVID-19 cases in world, user specify date
-	"""
+    Class whose is used to make a call about COVID-19 cases in world, user specify date
+    """
 
     def __init__(self):
         super().__init__()
@@ -132,8 +132,8 @@ class CasesDailyCountry(
 ):  # toDo i must overwrite function cases_validity for this class,
     # this class storage date in diffrent way
     """
-	Class whose is used to make a call about COVID-19 cases in country, user specify country and date
-	"""
+    Class whose is used to make a call about COVID-19 cases in country, user specify country and date
+    """
 
     def __init__(self):
         super().__init__()
