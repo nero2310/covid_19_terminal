@@ -27,6 +27,7 @@ def menu():
 		data = classes.TotalCases()
 		python_object=data.make_a_call()
 		dataFrame=classes.PandasDataAnalyzer(python_object)
+		dataFrame.save_to_json("example.json")
 
 	if option == "8":
 		print(classes.get_list_of_countries())
