@@ -147,6 +147,13 @@ class CasesDailyCountry(
         }
         self.url = "https://covid-19-data.p.rapidapi.com/report/country/name"
 
+class CasesInTimePeriod():
+    def __init__(self,start_data:date,end_data:datetime):
+        if start_data>end_data:
+            print("End date can't be earlier than start date")
+            return 1
+        else:
+            pass
 
 class PandasDataAnalyzer:
     def __init__(self, data):
