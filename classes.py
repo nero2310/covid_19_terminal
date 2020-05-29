@@ -116,6 +116,7 @@ class TotalCases(BaseApiClass, DateAnalyzer):
 
 
 class CasesDailyWorld(BaseApiClass, DateAnalyzer):
+
     """
     Class whose is used to make a call about COVID-19 cases in world, user specify date
     """
@@ -166,3 +167,4 @@ class PandasDataAnalyzer:
 
     def print_data_frame(self):
         pass
+
