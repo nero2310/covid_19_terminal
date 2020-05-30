@@ -75,22 +75,20 @@ class BaseApiClass:
         """
         Make a request to api provider
         :return:
-        date
+        data
         """
         self.response = requests.request(
             "GET", self.url, headers=self.headers, params=self.query
         )
-        date = json.loads(self.response.text)
-        return date
+        data = json.loads(self.response.text)
+        return data
 
-    def set_date(self):
+    def set_date(self,date):
         """
         User set date whose will be used to make a request
         """
-        variable = input(
-            "Enter date example 2020-5-15 : "
-        )  # I know it's ugly way to pass a value but i don't have idea																							# how to pass date
-        self.date = datetime.strptime(variable, "%Y-%m-%d").date()
+        self.date = datetime.strptime(date, "%Y-%m-%d").date()
+        self.query["date"]=self.date
 
     def set_country(self):
         """
@@ -102,7 +100,7 @@ class BaseApiClass:
         self.url = "https://covid-19-data.p.rapidapi.com/totals"
 
 
-class TotalCases(BaseApiClass, DateAnalyzer):
+class CasesInWorld(BaseApiClass, DateAnalyzer):
     """
     Class whose is used to make a call about daily cases in world
     """
@@ -123,7 +121,6 @@ class CasesDailyWorld(BaseApiClass, DateAnalyzer):
 
     def __init__(self):
         super().__init__()
-        self.set_date()
         self.query = {"date-format": "YYYY-MM-DD", "format": "json", "date": self.date}
         self.url = "https://covid-19-data.p.rapidapi.com/report/totals"
 
@@ -138,7 +135,6 @@ class CasesDailyCountry(
 
     def __init__(self):
         super().__init__()
-        self.set_date()
         self.set_country()
         self.query = {
             "date-format": "YYYY-MM-DD",

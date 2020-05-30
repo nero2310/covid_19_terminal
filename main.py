@@ -12,19 +12,21 @@ def menu():
     print("9.Exit")
     option = input("Chose option : ")
     if option == "1":
-        data = classes.TotalCases()
+        data = classes.CasesInWorld()
         python_object = data.make_a_call()
         data_analyzer = classes.DateAnalyzer(python_object).print_json()
     if option == "2":
         data = classes.CasesDailyWorld()
+        data.set_date(input("Set date from which cases will be displayed example 2020-5-15 "))
         python_object = data.make_a_call()
         data_analyzer = classes.DateAnalyzer(python_object).print_json()
     if option == "3":
         data = classes.CasesDailyCountry()
+        data.set_date(input("Set date from which cases will be displayed example 2020-5-15 "))
         python_object = data.make_a_call()
         data_analyzer = classes.DateAnalyzer(python_object).print_json()
     if option == "4":
-        data = classes.TotalCases()
+        data = classes.CasesInWorld()
         python_object = data.make_a_call()
         dataFrame = classes.PandasDataAnalyzer(python_object)
         dataFrame.save_to_json("example.json")
