@@ -28,13 +28,22 @@ def get_list_of_countries():  # toDo find a way to properly format output text
 
 class DateAnalyzer:
     def __init__(self, data):
-        self.json_obj = data
-        self.cases_dict = self.json_obj[0]
+        try:
+            self.json_obj = data
+            self.cases_dict = self.json_obj[0]
+        except KeyError:
+            print("Key error")
 
     def print_json(self):
-        for key, value in self.cases_dict.items():
-            print(key, value)
-        return 1
+        try:
+            for key, value in self.cases_dict.items():
+                print(key, value)
+            return 1
+        except AttributeError:
+            print("No json to print")
+
+    def print_provinces(self):
+        pass
 
     def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
         if (
