@@ -24,7 +24,7 @@ def menu():
         data = classes.CasesDailyCountry()
         data.set_date(input("Set date from which cases will be displayed example 2020-5-15 "))
         python_object = data.make_a_call()
-        data_analyzer = classes.DateAnalyzer(python_object).print_json()
+        data_analyzer = classes.DateAnalyzer(python_object).print_provinces()
     if option == "4":
         data = classes.CasesInWorld()
         python_object = data.make_a_call()

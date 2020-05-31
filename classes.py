@@ -2,6 +2,7 @@ import requests
 import json
 import pandas as pd
 import os.path
+import builtins
 
 from datetime import date, timedelta, datetime
 
@@ -43,7 +44,13 @@ class DateAnalyzer:
             print("No json to print")
 
     def print_provinces(self):
-        pass
+        for key, value in self.cases_dict.items():
+            if key!="provinces":
+                print(key, value)
+        for element in self.cases_dict["provinces"]:
+            if builtins.isinstance(element,dict):
+                for key,value in element.items():
+                    print(key,value)
 
     def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
         if (
