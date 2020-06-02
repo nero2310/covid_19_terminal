@@ -172,7 +172,7 @@ class PandasDataAnalyzer:
     def __init__(self, data):
         index_key = data[0].pop("lastChange")
         self.data_frame = pd.DataFrame(data, index=[index_key])
-        print(self.data_frame)
+
 
     def save_to_json(self, file_name="database.json"):
         if not os.path.isfile(file_name):
@@ -185,5 +185,5 @@ class PandasDataAnalyzer:
         pass
 
     def print_data_frame(self):
-        pass
+        print(self.data_frame)
 
