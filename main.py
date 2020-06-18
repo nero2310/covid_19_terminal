@@ -40,6 +40,12 @@ def menu():
     if option == "8":
         print(classes.get_list_of_countries())
 
+    if option =="9":
+        return False
+
+    return True
 
 if __name__ == "__main__":
-    menu()
+    loop=True
+    while loop:
+        loop=menu()
