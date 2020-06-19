@@ -6,6 +6,7 @@ import builtins
 import pymongo
 
 from datetime import date, timedelta, datetime
+from bson import BSON
 
 from settings import API_KEY
 
@@ -196,5 +197,13 @@ class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bso
         mydb = client["covid_19_db"]
         self.colection = mydb["test"]
 
-    def insert_data(self, data):
-        self.colection.insert_one(data)
+    def insert_data(self, data:dict):
+        # bson_data=BSON.encode(data[0])
+        # print(type(bson_data))
+        if isinstance(data,dict):
+            self.colection.insert_one(data)
+        elif isinstance(data[0],dict):
+            self.colection.insert_one(data[0])
+        else:
+            raise TypeError
+        
