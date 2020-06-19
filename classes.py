@@ -189,7 +189,8 @@ class PandasDataAnalyzer:
         print(self.data_frame)
 
 
-class SaveDataToMongo:
+class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type
+                       # that inherits from collections.MutableMapping
     def __init__(self):
         client = pymongo.MongoClient("mongodb://localhost:27017/")
         mydb = client["covid_19_db"]
@@ -197,4 +198,3 @@ class SaveDataToMongo:
 
     def insert_data(self, data):
         self.colection.insert_one(data)
-

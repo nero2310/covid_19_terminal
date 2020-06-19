@@ -8,6 +8,7 @@ def menu():
     print("2.Total Cases in World (user specify date)")
     print("3 Total Cases in Country (user specify date)")
     print("4.TESTING send data about total cases to pandas dataframe")
+    print("5.TESTING send data to MongoDB")
     print("8.Create country file")
     print("9.Exit")
     option = input("Chose option : ")
@@ -44,6 +45,10 @@ def menu():
         dataFrame = classes.PandasDataAnalyzer(python_object)
         dataFrame.print_data_frame()
         dataFrame.save_to_json("example.json")
+    if option=="5":
+        data=classes.CasesInWorld()
+        python_object = data.make_a_call()
+        classes.SaveDataToMongo().insert_data(python_object)
 
     if option == "8":
         print(classes.get_list_of_countries())
