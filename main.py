@@ -45,8 +45,9 @@ def menu():
         dataFrame = classes.PandasDataAnalyzer(python_object)
         dataFrame.print_data_frame()
         dataFrame.save_to_json("example.json")
-    if option=="5":
-        data=classes.CasesInWorld()
+
+    if option == "5":
+        data = classes.CasesInWorld()
         python_object = data.make_a_call()
         classes.SaveDataToMongo().insert_data(python_object)
 
