@@ -45,18 +45,18 @@ class DateAnalyzer:
 
     def print_provinces(self):
         for key, value in self.cases_dict.items():
-            if key!="provinces":
+            if key != "provinces":
                 print(key, value)
         for element in self.cases_dict["provinces"]:
-            if builtins.isinstance(element,dict):
-                for key,value in element.items():
-                    print(key,value)
+            if builtins.isinstance(element, dict):
+                for key, value in element.items():
+                    print(key, value)
 
     def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
         if (
-                self.cases_dict.get("confirmed", 0)
-                is False | self.cases_dict.get("recovered", 0)
-                is False
+            self.cases_dict.get("confirmed", 0)
+            is False | self.cases_dict.get("recovered", 0)
+            is False
         ):
             print("Warning don't have data from this date check another day")
             print("Check day before")
@@ -99,12 +99,12 @@ class BaseApiClass:
         data = json.loads(self.response.text)
         return data
 
-    def set_date(self,date):
+    def set_date(self, date):
         """
         User set date whose will be used to make a request
         """
         self.date = datetime.strptime(date, "%Y-%m-%d").date()
-        self.query["date"]=self.date
+        self.query["date"] = self.date
 
     def set_country(self):
         """
@@ -160,19 +160,20 @@ class CasesDailyCountry(
         }
         self.url = "https://covid-19-data.p.rapidapi.com/report/country/name"
 
-class CasesInTimePeriod():
-    def __init__(self,start_data:date,end_data:datetime):
-        if start_data>end_data:
+
+class CasesInTimePeriod:
+    def __init__(self, start_data: date, end_data: datetime):
+        if start_data > end_data:
             print("End date can't be earlier than start date")
             return 1
         else:
             pass
 
+
 class PandasDataAnalyzer:
     def __init__(self, data):
         index_key = data[0].pop("lastChange")
         self.data_frame = pd.DataFrame(data, index=[index_key])
-
 
     def save_to_json(self, file_name="database.json"):
         if not os.path.isfile(file_name):
@@ -186,4 +187,3 @@ class PandasDataAnalyzer:
 
     def print_data_frame(self):
         print(self.data_frame)
-
