@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import os.path
 import builtins
+import pymongo
 
 from datetime import date, timedelta, datetime
 
@@ -54,9 +55,9 @@ class DateAnalyzer:
 
     def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
         if (
-            self.cases_dict.get("confirmed", 0)
-            is False | self.cases_dict.get("recovered", 0)
-            is False
+                self.cases_dict.get("confirmed", 0)
+                is False | self.cases_dict.get("recovered", 0)
+                is False
         ):
             print("Warning don't have data from this date check another day")
             print("Check day before")
@@ -130,7 +131,6 @@ class CasesInWorld(BaseApiClass, DateAnalyzer):
 
 
 class CasesDailyWorld(BaseApiClass, DateAnalyzer):
-
     """
     Class whose is used to make a call about COVID-19 cases in world, user specify date
     """
@@ -161,7 +161,7 @@ class CasesDailyCountry(
         self.url = "https://covid-19-data.p.rapidapi.com/report/country/name"
 
 
-class CasesInTimePeriod:
+class CasesInTimePeriod:  # need to finish this class , maybe make funtion from this class ?
     def __init__(self, start_data: date, end_data: datetime):
         if start_data > end_data:
             print("End date can't be earlier than start date")
@@ -187,3 +187,14 @@ class PandasDataAnalyzer:
 
     def print_data_frame(self):
         print(self.data_frame)
+
+
+class SaveDataToMongo:
+    def __init__(self):
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        mydb = client["covid_19_db"]
+        self.colection = mydb["test"]
+
+    def insert_data(self, data):
+        self.colection.insert_one(data)
+
