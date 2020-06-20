@@ -203,6 +203,8 @@ class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bso
             self.colection = mydb["test"]
         except pymongo.errors.ConnectionFailure:
             return False
+        except pymongo.errors.ServerSelectionTimeoutError:
+            return False
         return True
 
     def insert_data(self, data:dict):
@@ -214,9 +216,12 @@ class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bso
         """
         # bson_data=BSON.encode(data[0])
         # print(type(bson_data))
-        if isinstance(data,dict):
-            self.colection.insert_one(data)
-        elif isinstance(data[0],dict):
-            self.colection.insert_one(data[0])
-        else:
-            raise TypeError
+        try:
+            if isinstance(data,dict):
+                self.colection.insert_one(data)
+            elif isinstance(data[0],dict):
+                self.colection.insert_one(data[0])
+            else:
+                raise TypeError
+        except pymongo.errors.ServerSelectionTimeoutError:
+            print("Can't connect to server")
