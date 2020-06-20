@@ -6,8 +6,8 @@ and Flask to create a local server with interactive diagrams
 
 ## Usage
 1.Clone repository 
-2.Create you api key in this site [COVID-19 data](https://rapidapi.com/Gramzivi/api/covid-19-data)
-3.Create file settings.py it should look like this:
+2.Create your api key in this site [COVID-19 data](https://rapidapi.com/Gramzivi/api/covid-19-data)
+3.Create file settings.py this file should look like this:
 API_KEY="YourApiKey"
 
 ## Contribiuting
