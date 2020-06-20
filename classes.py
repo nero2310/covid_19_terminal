@@ -192,11 +192,19 @@ class PandasDataAnalyzer:
 
 class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type
                        # that inherits from collections.MutableMapping
+    """
+    Initialize/Save data to mongoDB
+    """
     def __init__(self): # toDO check if connection is valid
         self.colection=None
 
-
     def init_connection(self):
+        """
+        Initialize connection to mongodb
+        :return:
+        True if connection succeed
+        False if connection didn't succeed
+        """
         try:
             client = pymongo.MongoClient("mongodb://localhost:27017/")
             mydb = client["covid_19_db"]
@@ -211,7 +219,8 @@ class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bso
         """
         Method send data to mongodb
         If data is dict
-        :param data:
+        Else raise TypeError
+        :param dict:
         :return:
         """
         # bson_data=BSON.encode(data[0])
