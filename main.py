@@ -49,7 +49,12 @@ def menu():
     if option == "5":
         data = classes.CasesInWorld()
         python_object = data.make_a_call()
-        classes.SaveDataToMongo().insert_data(python_object)
+        connection = classes.SaveDataToMongo()
+        is_connection_correct = connection.init_connection()
+        if is_connection_correct:
+            connection.insert_data(python_object)
+        else:
+            print("Connection Failure")
 
     if option == "8":
         print(classes.get_list_of_countries())

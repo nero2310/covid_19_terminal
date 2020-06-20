@@ -5,6 +5,7 @@ import os.path
 import builtins
 import pymongo
 
+from pymongo import errors
 from datetime import date, timedelta, datetime
 
 from settings import API_KEY
@@ -191,10 +192,18 @@ class PandasDataAnalyzer:
 
 class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type
                        # that inherits from collections.MutableMapping
-    def __init__(self):
-        client = pymongo.MongoClient("mongodb://localhost:27017/")
-        mydb = client["covid_19_db"]
-        self.colection = mydb["test"]
+    def __init__(self): # toDO check if connection is valid
+        self.colection=None
+
+
+    def init_connection(self):
+        try:
+            client = pymongo.MongoClient("mongodb://localhost:27017/")
+            mydb = client["covid_19_db"]
+            self.colection = mydb["test"]
+        except pymongo.errors.ConnectionFailure:
+            return False
+        return True
 
     def insert_data(self, data:dict):
         """
