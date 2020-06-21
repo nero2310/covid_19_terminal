@@ -3,7 +3,9 @@ import json
 import pandas as pd
 import os.path
 import builtins
+import pymongo
 
+from pymongo import errors
 from datetime import date, timedelta, datetime
 
 from settings import API_KEY
@@ -21,7 +23,7 @@ def get_list_of_countries():  # toDo find a way to properly format output text
     }
     response = requests.request("GET", url, headers=headers, params=query)
     json_response = json.dumps(response.json())
-    with (open("countires.json", "w")) as file:
+    with (open("../countires.json", "w")) as file:
         for element in json_response:
             file.write(str(element))
     return response.text
@@ -54,9 +56,9 @@ class DateAnalyzer:
 
     def cases_validity(self):  # If active/confirmed cases are equal 0 print warning
         if (
-            self.cases_dict.get("confirmed", 0)
-            is False | self.cases_dict.get("recovered", 0)
-            is False
+                self.cases_dict.get("confirmed", 0)
+                is False | self.cases_dict.get("recovered", 0)
+                is False
         ):
             print("Warning don't have data from this date check another day")
             print("Check day before")
@@ -130,7 +132,6 @@ class CasesInWorld(BaseApiClass, DateAnalyzer):
 
 
 class CasesDailyWorld(BaseApiClass, DateAnalyzer):
-
     """
     Class whose is used to make a call about COVID-19 cases in world, user specify date
     """
@@ -161,7 +162,7 @@ class CasesDailyCountry(
         self.url = "https://covid-19-data.p.rapidapi.com/report/country/name"
 
 
-class CasesInTimePeriod:
+class CasesInTimePeriod:  # need to finish this class , maybe make funtion from this class ?
     def __init__(self, start_data: date, end_data: datetime):
         if start_data > end_data:
             print("End date can't be earlier than start date")
@@ -187,3 +188,49 @@ class PandasDataAnalyzer:
 
     def print_data_frame(self):
         print(self.data_frame)
+
+
+class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type
+                       # that inherits from collections.MutableMapping
+    """
+    Initialize/Save data to mongoDB
+    """
+    def __init__(self): # toDO check if connection is valid
+        self.colection=None
+
+    def init_connection(self):
+        """
+        Initialize connection to mongodb
+        :return:
+        True if connection succeed
+        False if connection didn't succeed
+        """
+        try:
+            client = pymongo.MongoClient("mongodb://localhost:27017/")
+            mydb = client["covid_19_db"]
+            self.colection = mydb["test"]
+        except pymongo.errors.ConnectionFailure:
+            return False
+        except pymongo.errors.ServerSelectionTimeoutError:
+            return False
+        return True
+
+    def insert_data(self, data:dict):
+        """
+        Method send data to mongodb
+        If data is dict
+        Else raise TypeError
+        :param dict:
+        :return:
+        """
+        # bson_data=BSON.encode(data[0])
+        # print(type(bson_data))
+        try:
+            if isinstance(data,dict):
+                self.colection.insert_one(data)
+            elif isinstance(data[0],dict):
+                self.colection.insert_one(data[0])
+            else:
+                raise TypeError
+        except pymongo.errors.ServerSelectionTimeoutError:
+            print("Can't connect to server")
