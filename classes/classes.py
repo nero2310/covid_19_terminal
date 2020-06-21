@@ -23,7 +23,7 @@ def get_list_of_countries():  # toDo find a way to properly format output text
     }
     response = requests.request("GET", url, headers=headers, params=query)
     json_response = json.dumps(response.json())
-    with (open("countires.json", "w")) as file:
+    with (open("../countires.json", "w")) as file:
         for element in json_response:
             file.write(str(element))
     return response.text

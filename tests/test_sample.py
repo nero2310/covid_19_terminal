@@ -1,6 +1,4 @@
-import pytest
-
-import classes
+from classes import classes
 
 json_obj = [{"total": 15, "deaths": 200}]
 

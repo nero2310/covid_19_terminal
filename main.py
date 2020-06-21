@@ -1,6 +1,4 @@
-import classes
-
-from settings import API_KEY
+from classes import classes
 
 
 def menu():
