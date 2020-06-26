@@ -1,10 +1,10 @@
+from classes import api_handler
 from classes import pandas_data
 from classes import classes
 from classes import database_connector
 
 def menu():
-    choice=int(input('''
-Main Menu
+    choice=int(input('''Main Menu
 1.Total Cases in World
 2.Total Cases in World (user specify date)
 3 Total Cases in Country (user specify date)
@@ -14,18 +14,18 @@ Main Menu
 9.Exit 
 :'''))
     if choice == 1:
-        data = classes.CasesInWorld()
+        data = api_handler.CasesInWorld()
         json_object = data.make_a_call()
-        data_analyzer = classes.DataPrinter(json_object).print_json()
+        data_analyzer = api_handler.DataPrinter(json_object).print_json()
     if choice == 2:
-        data = classes.CasesDailyWorld()
+        data = api_handler.CasesDailyWorld()
         data.set_date(
             input("Set date from which cases will be displayed example 2020-5-15 ")
         )
         json_object = data.make_a_call()
-        data_analyzer = classes.DataPrinter(json_object).print_json()
+        data_analyzer = api_handler.DataPrinter(json_object).print_json()
     if choice == 3:
-        data = classes.CasesDailyCountry()
+        data = api_handler.CasesDailyCountry()
         data.set_date(
             input("Set date from which cases will be displayed example 2020-5-15 ")
         )
@@ -34,21 +34,21 @@ Main Menu
             "Do you wanna see cases in country or cases in regions like states etc.?"
         )
         if each_or_summary == "1" or each_or_summary == "regions":
-            data_analyzer = classes.DataPrinter(json_object).print_provinces()
+            data_analyzer = api_handler.DataPrinter(json_object).print_provinces()
         elif each_or_summary == "2" or each_or_summary == "country":
-            data_analyzer = classes.DataPrinter(
+            data_analyzer = api_handler.DataPrinter(
                 json_object
             ).print_json()  # toDo  output the data in a condensed form
 
     if choice == 4:
-        data = classes.CasesInWorld()
+        data = api_handler.CasesInWorld()
         json_object = data.make_a_call()
         data_frame = pandas_data.PandasDataAnalyzer(json_object)
         data_frame.print_data_frame()
         data_frame.save_to_json("example.json")
 
     if choice == 5:
-        data = classes.CasesInWorld()
+        data = api_handler.CasesInWorld()
         json_object = data.make_a_call()
         connection = database_connector.SaveDataToMongo()
         is_connection_correct = connection.init_connection()
