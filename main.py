@@ -15,14 +15,14 @@ Main Menu
     if choice == 1:
         data = classes.CasesInWorld()
         json_object = data.make_a_call()
-        data_analyzer = classes.DateAnalyzer(json_object).print_json()
+        data_analyzer = classes.DataPrinter(json_object).print_json()
     if choice == 2:
         data = classes.CasesDailyWorld()
         data.set_date(
             input("Set date from which cases will be displayed example 2020-5-15 ")
         )
         json_object = data.make_a_call()
-        data_analyzer = classes.DateAnalyzer(json_object).print_json()
+        data_analyzer = classes.DataPrinter(json_object).print_json()
     if choice == 3:
         data = classes.CasesDailyCountry()
         data.set_date(
@@ -33,9 +33,9 @@ Main Menu
             "Do you wanna see cases in country or cases in regions like states etc.?"
         )
         if each_or_summary == "1" or each_or_summary == "regions":
-            data_analyzer = classes.DateAnalyzer(json_object).print_provinces()
+            data_analyzer = classes.DataPrinter(json_object).print_provinces()
         elif each_or_summary == "2" or each_or_summary == "country":
-            data_analyzer = classes.DateAnalyzer(
+            data_analyzer = classes.DataPrinter(
                 json_object
             ).print_json()  # toDo  output the data in a condensed form
 

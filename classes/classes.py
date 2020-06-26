@@ -29,7 +29,7 @@ def get_list_of_countries():  # toDo find a way to properly format output text
     return response.text
 
 
-class DateAnalyzer:
+class DataPrinter:
     def __init__(self, data):
         try:
             self.json_obj = data
@@ -118,7 +118,7 @@ class BaseApiClass:
         self.url = "https://covid-19-data.p.rapidapi.com/totals"
 
 
-class CasesInWorld(BaseApiClass, DateAnalyzer):
+class CasesInWorld(BaseApiClass, DataPrinter):
     """
     Class whose is used to make a call about daily cases in world
     """
@@ -131,7 +131,7 @@ class CasesInWorld(BaseApiClass, DateAnalyzer):
         print(self.headers)
 
 
-class CasesDailyWorld(BaseApiClass, DateAnalyzer):
+class CasesDailyWorld(BaseApiClass, DataPrinter):
     """
     Class whose is used to make a call about COVID-19 cases in world, user specify date
     """
@@ -143,7 +143,7 @@ class CasesDailyWorld(BaseApiClass, DateAnalyzer):
 
 
 class CasesDailyCountry(
-    BaseApiClass, DateAnalyzer
+    BaseApiClass, DataPrinter
 ):  # toDo i must overwrite function cases_validity for this class,
     # this class storage date in diffrent way
     """
@@ -190,47 +190,3 @@ class PandasDataAnalyzer:
         print(self.data_frame)
 
 
-class SaveDataToMongo: # document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type
-                       # that inherits from collections.MutableMapping
-    """
-    Initialize/Save data to mongoDB
-    """
-    def __init__(self): # toDO check if connection is valid
-        self.colection=None
-
-    def init_connection(self):
-        """
-        Initialize connection to mongodb
-        :return:
-        True if connection succeed
-        False if connection didn't succeed
-        """
-        try:
-            client = pymongo.MongoClient("mongodb://localhost:27017/")
-            mydb = client["covid_19_db"]
-            self.colection = mydb["test"]
-        except pymongo.errors.ConnectionFailure:
-            return False
-        except pymongo.errors.ServerSelectionTimeoutError:
-            return False
-        return True
-
-    def insert_data(self, data:dict):
-        """
-        Method send data to mongodb
-        If data is dict
-        Else raise TypeError
-        :param dict:
-        :return:
-        """
-        # bson_data=BSON.encode(data[0])
-        # print(type(bson_data))
-        try:
-            if isinstance(data,dict):
-                self.colection.insert_one(data)
-            elif isinstance(data[0],dict):
-                self.colection.insert_one(data[0])
-            else:
-                raise TypeError
-        except pymongo.errors.ServerSelectionTimeoutError:
-            print("Can't connect to server")
