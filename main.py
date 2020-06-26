@@ -1,3 +1,4 @@
+from classes import pandas_data
 from classes import classes
 from classes import database_connector
 
@@ -42,9 +43,9 @@ Main Menu
     if choice == 4:
         data = classes.CasesInWorld()
         json_object = data.make_a_call()
-        dataFrame = classes.PandasDataAnalyzer(json_object)
-        dataFrame.print_data_frame()
-        dataFrame.save_to_json("example.json")
+        data_frame = pandas_data.PandasDataAnalyzer(json_object)
+        data_frame.print_data_frame()
+        data_frame.save_to_json("example.json")
 
     if choice == 5:
         data = classes.CasesInWorld()
