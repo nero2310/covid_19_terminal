@@ -1,5 +1,5 @@
 from classes import classes
-
+from classes import database_connector
 
 def menu():
     choice=int(input('''
@@ -49,10 +49,11 @@ Main Menu
     if choice == 5:
         data = classes.CasesInWorld()
         json_object = data.make_a_call()
-        connection = classes.SaveDataToMongo()
+        connection = database_connector.SaveDataToMongo()
         is_connection_correct = connection.init_connection()
         if is_connection_correct:
-            connection.insert_data(json_object)
+            if connection.insert_data(json_object):
+                print("Data was insert into db")
         else:
             print("Connection Failure")
 
