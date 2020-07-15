@@ -64,10 +64,13 @@ def menu():
     if choice == 9:
         return False
 
-    return True
+    choice = input("Do you want go to main menu Y/N?")
+    if choice == "Y" or choice == "y":
+        return True
+    else:
+        return False
 
 
 if __name__ == "__main__":
-    loop = True
-    while loop:
-        loop = menu()
+    while menu():
+        pass
